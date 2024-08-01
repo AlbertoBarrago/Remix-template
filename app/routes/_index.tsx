@@ -1,6 +1,6 @@
 import type {MetaFunction} from "@remix-run/node";
 import {getDb} from "~/.server/mongodb";
-import {useLoaderData} from "@remix-run/react";
+import {useLoaderData, useNavigate} from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
     return [
@@ -8,7 +8,6 @@ export const meta: MetaFunction = () => {
         {name: "description", content: "Welcome to Notes App!"},
     ];
 };
-
 
 export async function loader() {
     const db = await getDb();
@@ -18,6 +17,7 @@ export async function loader() {
 
 export default function Index() {
     const {articles} = useLoaderData<typeof loader>();
+    const {navitagion} = useNavigate()
     return (
         <div className="font-sans p-4">
             <h1 className="text-3xl">Welcome to Notes</h1>

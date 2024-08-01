@@ -1,6 +1,7 @@
 // app/mongodb.server.ts
 
 import { MongoClient } from 'mongodb';
+import * as process from "node:process";
 
 let mongodb: MongoClient;
 
@@ -19,7 +20,10 @@ async function connectToDatabase() {
 
 export async function getDb() {
     const client = await connectToDatabase();
-    return client.db('albz-blog');
+    if(!process.env.MONGODB_NAME) {
+        throw new Error('MONGODB_NAME is not defined')
+    }
+    return client.db(process.env.MONGODB_NAME);
 }
 
 export async function closeDb() {
